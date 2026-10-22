@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI School Genius | Learn Smarter</title>
+<style>
+:root{--navy:#102747;--blue:#1769aa;--sky:#e9f5ff;--ink:#182538;--muted:#617086;--white:#fff;--line:#dce6f0;--green:#13795b}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f5f8fc;line-height:1.55}
+header{background:linear-gradient(125deg,#102747,#1769aa);color:white;padding:22px max(5%,calc((100% - 1100px)/2));}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{font-weight:800;font-size:1.2rem;letter-spacing:.2px}.brand span{color:#9ed8ff}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav button{border:1px solid #ffffff55;background:#ffffff12;color:white;border-radius:9px;padding:9px 12px;cursor:pointer;font-weight:600}nav button.active,nav button:hover{background:white;color:var(--navy)}
+.hero{max-width:1100px;margin:auto;padding:52px 0 42px;display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:center}.eyebrow{color:#a9ddff;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;font-size:.8rem}.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.08;margin:12px 0}.hero p{font-size:1.08rem;color:#e2efff;max-width:620px}.hero-card{background:#ffffff15;border:1px solid #ffffff35;border-radius:20px;padding:24px;backdrop-filter:blur(5px)}.hero-card .big{font-size:2.6rem}.hero-card p{font-size:.95rem}
+main{max-width:1100px;margin:28px auto;padding:0 18px 50px}.section{display:none}.section.active{display:block}.section-title{margin-bottom:18px}.section-title h2{margin:0;font-size:1.8rem}.section-title p{margin:4px 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 7px 24px #1027470a}.icon{width:44px;height:44px;border-radius:12px;background:var(--sky);display:grid;place-items:center;font-size:1.35rem}.card h3{margin:12px 0 5px}.muted{color:var(--muted)}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:24px;max-width:800px;box-shadow:0 7px 24px #1027470a}.field{display:grid;gap:6px;margin:14px 0}.field label{font-weight:700;font-size:.92rem}select,input,textarea{width:100%;padding:12px;border:1px solid #cbd7e5;border-radius:10px;background:white;font:inherit;color:var(--ink)}textarea{min-height:100px;resize:vertical}.btn{background:var(--blue);color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(.92)}.btn.secondary{background:#eaf3fc;color:var(--navy)}.answer{display:none;background:#f0f8ff;border-left:4px solid var(--blue);padding:16px;border-radius:8px;margin-top:16px;white-space:pre-wrap}.answer.show{display:block}.quiz-option{display:block;width:100%;text-align:left;background:white;border:1px solid var(--line);padding:12px;border-radius:10px;margin:8px 0;cursor:pointer;font:inherit}.quiz-option.selected{border-color:var(--blue);background:#edf7ff}.status{font-weight:700;margin-top:12px}.tip{padding:14px 0;border-bottom:1px solid var(--line)}.tip:last-child{border-bottom:0}.footer{text-align:center;background:#102747;color:#dceafa;padding:25px 16px;font-size:.9rem}.notice{background:#fff7df;border:1px solid #f1dfa2;color:#6b5312;padding:12px 14px;border-radius:10px;font-size:.9rem;margin-top:16px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:35px 0}.grid{grid-template-columns:1fr}.hero-card{max-width:450px}.nav{align-items:flex-start}nav{width:100%}nav button{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">🎓 AI School <span>Genius</span></div>
+    <nav aria-label="Main navigation">
+      <button class="active" data-tab="home">Home</button>
+      <button data-tab="tutor">AI Tutor</button>
+      <button data-tab="quiz">Quiz Arena</button>
+      <button data-tab="tips">Study Tips</button>
+    </nav>
+  </div>
+  <div class="hero">
+    <div><div class="eyebrow">Your intelligent learning companion</div><h1>Learn smarter.<br>Shine brighter.</h1><p>A student-friendly learning hub to explore school subjects, practise questions, and build better study habits.</p><button class="btn" onclick="showTab('tutor')">Start learning →</button></div>
+    <div class="hero-card"><div class="big">💡 🧠 ✨</div><h2>Your next breakthrough starts here.</h2><p>Ask a question, test your knowledge, and keep growing one lesson at a time.</p><strong>Made for curious minds.</strong></div>
+  </div>
+</header>
+<main>
+<section id="home" class="section active">
+  <div class="section-title"><h2>Welcome to your learning hub</h2><p>Explore the tools below. No account needed for this demonstration.</p></div>
+  <div class="grid">
+    <article class="card"><div class="icon">🧑‍🏫</div><h3>Study with a tutor</h3><p class="muted">Choose a subject and topic to receive a guided starter explanation.</p><button class="btn secondary" onclick="showTab('tutor')">Open AI Tutor</button></article>
+    <article class="card"><div class="icon">🏆</div><h3>Challenge yourself</h3><p class="muted">Answer sample questions and get instant feedback on your score.</p><button class="btn secondary" onclick="showTab('quiz')">Play a quiz</button></article>
+    <article class="card"><div class="icon">📚</div><h3>Build good habits</h3><p class="muted">Use simple study techniques to learn more confidently.</p><button class="btn secondary" onclick="showTab('tips')">See study tips</button></article>
+  </div>
+  <div class="notice"><strong>Demo note:</strong> This free version includes guided sample explanations and a working quiz. It does not call a live AI model yet.</div>
+</section>
+<section id="tutor" class="section">
+  <div class="section-title"><h2>🧑‍🏫 AI Tutor</h2><p>Choose a topic to get a guided explanation and practice questions.</p></div>
+  <div class="panel">
+    <div class="field"><label for="subject">School subject</label><select id="subject"><option>Biology</option><option>Mathematics</option><option>Chemistry</option><option>Physics</option><option>English Language</option><option>Computer Studies</option></select></div>
+    <div class="field"><label for="topic">Topic or question</label><input id="topic" placeholder="e.g. Photosynthesis" value="Photosynthesis"></div>
+    <button class="btn" onclick="teach()">Explain this topic</button>
+    <div id="tutorAnswer" class="answer" aria-live="polite"></div>
+    <div class="notice">This is a starter tutor using prepared examples, not a live AI service. It works offline after the page loads.</div>
+  </div>
+</section>
+<section id="quiz" class="section">
+  <div class="section-title"><h2>🏆 Quiz Arena</h2><p>Answer the questions and check your score.</p></div>
+  <div class="panel"><div id="quizArea"></div><button class="btn" id="checkQuiz" onclick="checkQuiz()">Check my answers</button><button class="btn secondary" onclick="restartQuiz()">Try again</button><div id="quizResult" class="status" aria-live="polite"></div></div>
+</section>
+<section id="tips" class="section">
+  <div class="section-title"><h2>📚 Study Tips</h2><p>Small habits can make a big difference.</p></div>
+  <div class="panel">
+    <div class="tip"><strong>⏱️ Try focused study sessions</strong><br>Study for 25 minutes, then take a 5-minute break.</div>
+    <div class="tip"><strong>🧠 Practise active recall</strong><br>Close your notes and explain the idea from memory before checking your notes.</div>
+    <div class="tip"><strong>🔁 Review more than once</strong><br>Revisit difficult topics the next day and again a few days later.</div>
+    <div class="tip"><strong>✍️ Learn from mistakes</strong><br>Write down what confused you and practise a similar question.</div>
+    <div class="tip"><strong>😴 Protect your sleep</strong><br>A regular sleep routine helps you stay focused and ready to learn.</div>
+  </div>
+</section>
+</main>
+<footer class="footer">AI School Genius · Learn smarter. Shine brighter.<br><span>Student project demonstration · Uses sample learning content only</span></footer>
+<script>
+function showTab(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+const lessons={
+ 'Biology':{keywords:['photo','plant','chlorophyll'],title:'Photosynthesis',text:'Photosynthesis is the process by which green plants use light energy to make glucose from carbon dioxide and water. Chlorophyll in chloroplasts absorbs light. Oxygen is released as a by-product.',example:'Think of a leaf as a tiny solar-powered food factory.',practice:'Practice: Name two raw materials needed for photosynthesis.'},
+ 'Mathematics':{keywords:['percent','fraction','algebra','equation','number'],title:'A simple maths method',text:'Read the question carefully, identify what is given, choose the correct operation, and show each step. For percentages, convert the percentage to a decimal by dividing by 100.',example:'Example: 15% of 200 = 0.15 × 200 = 30.',practice:'Practice: What is 20% of 150? Try it before checking with a teacher.'},
+ 'Chemistry':{keywords:['acid','base','water','atom','reaction'],title:'Understanding chemistry',text:'Chemistry studies matter, its properties, and how substances change. Atoms are the building blocks of matter, and chemical reactions rearrange atoms to form new substances.',example:'Water has the chemical formula H₂O: each molecule contains two hydrogen atoms and one oxygen atom.',practice:'Practice: What does a chemical formula tell you about a substance?'},
+ 'Physics':{keywords:['force','motion','energy','speed','electric'],title:'Understanding physics',text:'Physics explores matter, energy, motion, forces, and how the natural world works. Begin by identifying the quantities in a problem and the units used.',example:'Average speed = distance travelled ÷ time taken.',practice:'Practice: If a student walks 100 metres in 20 seconds, what is their average speed?'},
+ 'English Language':{keywords:['grammar','essay','noun','verb','writing'],title:'Clear English writing',text:'Strong writing communicates one main idea at a time. Use clear sentences, suitable punctuation, and paragraphs that group related ideas.',example:'A paragraph often begins with a topic sentence, supports it with details, and ends by connecting back to the main idea.',practice:'Practice: Write three sentences about a school subject you enjoy.'},
+ 'Computer Studies':{keywords:['computer','internet','coding','html','program'],title:'Computer studies basics',text:'A computer receives input, processes data, can store information, and produces output. Programming means writing instructions a computer can follow.',example:'HTML describes the structure of a web page; CSS styles it; JavaScript adds interactions.',practice:'Practice: What is one difference between HTML and CSS?'}
+};
+function teach(){let subject=document.getElementById('subject').value;let topic=document.getElementById('topic').value.trim();let l=lessons[subject];let out=document.getElementById('tutorAnswer');let t=topic.toLowerCase();let intro=l.text;if(subject==='Biology'&&t.includes('photo')){}else if(subject==='Mathematics'&&t.includes('percent')){}else if(subject==='Chemistry'&&t.includes('water')){}else{intro='You asked about “'+(topic||subject)+'”. Here is a useful starting point for '+subject+': '+l.text}out.textContent='STARTER EXPLANATION — '+(topic||l.title)+'\n\n'+intro+'\n\nEXAMPLE\n'+l.example+'\n\nPRACTICE QUESTION\n'+l.practice+'\n\nKeep learning: compare this explanation with your class notes and ask your teacher about anything unclear.';out.classList.add('show')}
+const questions=[
+{q:'What is 15% of 200?',a:['20','30','35','40'],correct:1},
+{q:'Which cell structure is the main site of photosynthesis?',a:['Nucleus','Chloroplast','Mitochondrion','Ribosome'],correct:1},
+{q:'What is the chemical formula for water?',a:['CO₂','O₂','H₂O','NaCl'],correct:2},
+{q:'What does HTML mainly describe?',a:['Web page structure','Computer hardware temperature','Internet speed','Battery power'],correct:0},
+{q:'What is average speed equal to?',a:['Time ÷ distance','Distance × time','Distance ÷ time','Mass ÷ volume'],correct:2}
+];
+function renderQuiz(){let area=document.getElementById('quizArea');area.innerHTML='';questions.forEach((q,i)=>{let wrap=document.createElement('div');wrap.style.marginBottom='22px';let title=document.createElement('p');title.innerHTML='<strong>'+(i+1)+'. '+q.q+'</strong>';wrap.appendChild(title);q.a.forEach((a,j)=>{let label=document.createElement('label');label.className='quiz-option';let radio=document.createElement('input');radio.type='radio';radio.name='q'+i;radio.value=j;radio.style.width='auto';radio.style.marginRight='9px';label.appendChild(radio);label.appendChild(document.createTextNode(a));wrap.appendChild(label)});area.appendChild(wrap)})}
+function checkQuiz(){let score=0,answered=0;questions.forEach((q,i)=>{let selected=document.querySelector('input[name="q'+i+'"]:checked');if(selected){answered++;if(Number(selected.value)===q.correct)score++}});let result=document.getElementById('quizResult');result.textContent='You scored '+score+' out of '+questions.length+'. You answered '+answered+' question(s). '+(score===questions.length?'Excellent work!': 'Review the explanations and try again to improve your score.');}
+function restartQuiz(){document.getElementById('quizResult').textContent='';renderQuiz()}
+renderQuiz();
+</script>
+</body>
+</html>
