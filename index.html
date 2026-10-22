@@ -27,7 +27,7 @@ main{max-width:1100px;margin:28px auto;padding:0 18px 50px}.section{display:none
     </nav>
   </div>
   <div class="hero">
-    <div><div class="eyebrow">Your intelligent learning companion</div><h1>Learn smarter.<br>Shine brighter.</h1><p>A student-friendly learning hub to explore school subjects, practise questions, and build better study habits.</p><button class="btn" onclick="showTab('tutor')">Start learning →</button></div>
+    <div><div class="eyebrow">Your intelligent learning companion</div><h1>Learn smarter.<br>Shine brighter.</h1><p>A student-friendly learning hub with an AI tutor, practice quizzes, and better study habits.</p><button class="btn" onclick="showTab('tutor')">Start learning →</button></div>
     <div class="hero-card"><div class="big">💡 🧠 ✨</div><h2>Your next breakthrough starts here.</h2><p>Ask a question, test your knowledge, and keep growing one lesson at a time.</p><strong>Made for curious minds.</strong></div>
   </div>
 </header>
@@ -39,16 +39,16 @@ main{max-width:1100px;margin:28px auto;padding:0 18px 50px}.section{display:none
     <article class="card"><div class="icon">🏆</div><h3>Challenge yourself</h3><p class="muted">Answer sample questions and get instant feedback on your score.</p><button class="btn secondary" onclick="showTab('quiz')">Play a quiz</button></article>
     <article class="card"><div class="icon">📚</div><h3>Build good habits</h3><p class="muted">Use simple study techniques to learn more confidently.</p><button class="btn secondary" onclick="showTab('tips')">See study tips</button></article>
   </div>
-  <div class="notice"><strong>Demo note:</strong> This free version includes guided sample explanations and a working quiz. It does not call a live AI model yet.</div>
+  <div class="notice"><strong>AI Tutor:</strong> Ask learning questions and receive AI-generated explanations. Quiz Arena and Study Tips work independently.</div>
 </section>
 <section id="tutor" class="section">
-  <div class="section-title"><h2>🧑‍🏫 AI Tutor</h2><p>Choose a topic to get a guided explanation and practice questions.</p></div>
+  <div class="section-title"><h2>🧑‍🏫 AI Tutor</h2><p>Ask a real AI tutor for clear explanations, examples, and study help.</p></div>
   <div class="panel">
     <div class="field"><label for="subject">School subject</label><select id="subject"><option>Biology</option><option>Mathematics</option><option>Chemistry</option><option>Physics</option><option>English Language</option><option>Computer Studies</option></select></div>
     <div class="field"><label for="topic">Topic or question</label><input id="topic" placeholder="e.g. Photosynthesis" value="Photosynthesis"></div>
     <button class="btn" onclick="teach()">Explain this topic</button>
     <div id="tutorAnswer" class="answer" aria-live="polite"></div>
-    <div class="notice">This is a starter tutor using prepared examples, not a live AI service. It works offline after the page loads.</div>
+    <div class="notice">Connected to a real AI model through Cloudflare. Do not enter names, passwords, grades, or other private student information. AI answers can make mistakes, so check important facts with class notes or a teacher.</div>
   </div>
 </section>
 <section id="quiz" class="section">
@@ -78,7 +78,46 @@ const lessons={
  'English Language':{keywords:['grammar','essay','noun','verb','writing'],title:'Clear English writing',text:'Strong writing communicates one main idea at a time. Use clear sentences, suitable punctuation, and paragraphs that group related ideas.',example:'A paragraph often begins with a topic sentence, supports it with details, and ends by connecting back to the main idea.',practice:'Practice: Write three sentences about a school subject you enjoy.'},
  'Computer Studies':{keywords:['computer','internet','coding','html','program'],title:'Computer studies basics',text:'A computer receives input, processes data, can store information, and produces output. Programming means writing instructions a computer can follow.',example:'HTML describes the structure of a web page; CSS styles it; JavaScript adds interactions.',practice:'Practice: What is one difference between HTML and CSS?'}
 };
-function teach(){let subject=document.getElementById('subject').value;let topic=document.getElementById('topic').value.trim();let l=lessons[subject];let out=document.getElementById('tutorAnswer');let t=topic.toLowerCase();let intro=l.text;if(subject==='Biology'&&t.includes('photo')){}else if(subject==='Mathematics'&&t.includes('percent')){}else if(subject==='Chemistry'&&t.includes('water')){}else{intro='You asked about “'+(topic||subject)+'”. Here is a useful starting point for '+subject+': '+l.text}out.textContent='STARTER EXPLANATION — '+(topic||l.title)+'\n\n'+intro+'\n\nEXAMPLE\n'+l.example+'\n\nPRACTICE QUESTION\n'+l.practice+'\n\nKeep learning: compare this explanation with your class notes and ask your teacher about anything unclear.';out.classList.add('show')}
+const AI_TUTOR_ENDPOINT = "https://ai-school-genius-api.w12462043.workers.dev/ask";
+
+async function teach(){
+  const subject = document.getElementById('subject').value;
+  const topic = document.getElementById('topic').value.trim();
+  const out = document.getElementById('tutorAnswer');
+  const button = document.querySelector('#tutor .panel .btn');
+  if(!topic){
+    out.textContent = 'Please enter a topic or question first.';
+    out.classList.add('show');
+    return;
+  }
+  button.disabled = true;
+  button.textContent = 'Thinking...';
+  out.textContent = 'AI School Genius is preparing your explanation. Please wait...';
+  out.classList.add('show');
+  try {
+    const response = await fetch(AI_TUTOR_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: 'School subject: ' + subject + '\nStudent question: ' + topic
+      })
+    });
+    let data = {};
+    try { data = await response.json(); } catch (_) {}
+    if (!response.ok || !data.answer) {
+      throw new Error(data.error || ('The tutor request failed (HTTP ' + response.status + ').'));
+    }
+    out.textContent = data.answer + '\n\nStudy tip: Try explaining the main idea in your own words.';
+  } catch (error) {
+    out.textContent =
+      'Sorry, the AI tutor could not connect.\n\n' +
+      (error && error.message ? error.message : 'Please try again.') +
+      '\n\nIf this keeps happening, check that the Cloudflare Worker is deployed and its ALLOWED_ORIGIN matches your GitHub Pages address.';
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Explain this topic';
+  }
+}
 const questions=[
 {q:'What is 15% of 200?',a:['20','30','35','40'],correct:1},
 {q:'Which cell structure is the main site of photosynthesis?',a:['Nucleus','Chloroplast','Mitochondrion','Ribosome'],correct:1},
